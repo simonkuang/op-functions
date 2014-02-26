@@ -15,7 +15,7 @@
 autossh_proc="/usr/bin/autossh -M 25678 -NR 33936:0.0.0.0:22 -p 33938 "\
 "sshproxy@510112.com &"
 prog_file=$(echo ${autossh_proc}|awk '{print $1}')
-prog=$(basename "${autossh_proc}")
+prog=$(basename "${prog_file}")
 prog=$(echo ${prog}|awk '{print $1}')
 
 lockfile="/var/lock/subsys/autossh"
