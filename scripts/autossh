@@ -1,0 +1,84 @@
+#!/bin/sh
+# DateTime: 2014-03-03
+# Author: simonkuang
+# chkconfig:    - 84 16
+# description:  autossh startup script
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+# Source networking configuration.
+. /etc/sysconfig/network
+
+# Check that networking is up.
+[ "$NETWORKING" = "no" ] && exit 0
+
+autossh_proc="/usr/bin/autossh -M 25678 -NR 33936:0.0.0.0:22 -p 33938 "\
+"sshproxy@510112.com &"
+prog_file=$(echo ${autossh_proc}|awk '{print $1}')
+prog=$(basename "${autossh_proc}")
+prog=$(echo ${prog}|awk '{print $1}')
+
+lockfile="/var/lock/subsys/autossh"
+
+start() {
+  [ -x ${prog_file} ] || exit 5
+  echo -n $"Starting $prog: "
+  daemon ${autossh_proc}
+  retval=$?
+  echo
+  [ $retval -eq 0 ] && touch $lockfile
+  return $retval
+}
+
+stop() {
+  echo -n $"Stopping $prog: "
+  killproc $prog -QUIT
+  retval=$?
+  echo
+  [ $retval -eq 0 ] && rm -f $lockfile
+  return $retval
+}
+
+restart() {
+  stop
+  start
+}
+
+reload() {
+  echo -n $"Reloading $prog: "
+  killproc ${autossh_proc} -HUP
+  RETVAL=$?
+  echo
+}
+
+force_reload() {
+  restart
+}
+
+rh_status() {
+  status $prog
+}
+
+rh_status_q() {
+  rh_status >/dev/null 2>&1
+}
+
+case "$1" in
+  start)
+    rh_status_q && exit 0
+    $1
+    ;;
+  stop)
+    rh_status_q || exit 0
+    $1
+    ;;
+  restart|configtest)
+    $1
+    ;;
+  status)
+    rh_status
+    ;;
+  *)
+    echo $"Usage: $0 {start|stop|status|restart|reload}"
+    exit 2
+esac
