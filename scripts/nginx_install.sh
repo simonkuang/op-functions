@@ -53,6 +53,8 @@ get_modules "https://github.com/agentzh/redis2-nginx-module.git" \
 get_modules \
     "https://github.com/yaoweibin/ngx_http_substitutions_filter_module.git" \
     "ngx_http_substitutions_filter_module"
+get_modules "https://github.com/yaoweibin/nginx_tcp_proxy_module.git" \
+    "nginx_tcp_proxy_module"
 
 if [ ! -f "$BUILD_TEMP_DIR/nginx-1.5.11.tar.gz" ]; then
   wget -t 3 -O nginx-1.5.11.tar.gz \
@@ -120,7 +122,8 @@ cd "$BUILD_TEMP_DIR/nginx-1.5.11"
   --add-module="$BUILD_TEMP_DIR/set-misc-nginx-module" \
   --add-module="$BUILD_TEMP_DIR/lua-nginx-module" \
   --add-module="$BUILD_TEMP_DIR/redis2-nginx-module" \
-  --add-module="$BUILD_TEMP_DIR/ngx_http_substitutions_filter_module"
+  --add-module="$BUILD_TEMP_DIR/ngx_http_substitutions_filter_module" \
+  --add-module="$BUILD_TEMP_DIR/nginx_tcp_proxy_module"
 
 make && make install
 
