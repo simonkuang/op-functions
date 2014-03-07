@@ -18,7 +18,7 @@ fi
 cd $BUILD_TEMP_DIR
 
 yum install -y --nogpgcheck git zlib-devel automake autoconf make \
-    libxml2-devel libxslt-devel
+    libxml2-devel libxslt-devel patch
 
 # try to git clone and retry 3 times
 # @param {String} git repository's url
@@ -99,6 +99,9 @@ ldconfig
 
 # building nginx
 cd "$BUILD_TEMP_DIR/nginx-1.5.11"
+# patch for tcp proxy
+patch -p1 < ../nginx_tcp_proxy_module/tcp.patch
+# configure && make && make install
 ./configure \
   --prefix=/usr/local/nginx-1.5.11 \
   --user=nobody \

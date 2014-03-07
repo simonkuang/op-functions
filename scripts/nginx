@@ -12,42 +12,42 @@
 # Check that networking is up.
 [ "$NETWORKING" = "no" ] && exit 0
 
-nginx="/usr/local/nginx-1.5.3/sbin/nginx"
+nginx="/usr/local/nginx-1.5.11/sbin/nginx"
 prog=$(basename ${nginx})
 
-  lockfile="/var/lock/subsys/nginx"
+lockfile="/var/lock/subsys/nginx"
 
-  start() {
-    [ -x ${nginx} ] || exit 5
-      echo -n $"Starting $prog: "
-      daemon ${nginx}
-    retval=$?
-      echo
-      [ $retval -eq 0 ] && touch $lockfile
-      return $retval
-  }
+start() {
+  [ -x ${nginx} ] || exit 5
+  echo -n $"Starting $prog: "
+  daemon ${nginx}
+  retval=$?
+  echo
+  [ $retval -eq 0 ] && touch $lockfile
+  return $retval
+}
 
 stop() {
   echo -n $"Stopping $prog: "
-    killproc $prog -QUIT
-    retval=$?
-    echo
-    [ $retval -eq 0 ] && rm -f $lockfile
-    return $retval
+  killproc $prog -QUIT
+  retval=$?
+  echo
+  [ $retval -eq 0 ] && rm -f $lockfile
+  return $retval
 }
 
 restart() {
   configtest || return $?
-    stop
-    start
+  stop
+  start
 }
 
 reload() {
   configtest || return $?
-    echo -n $"Reloading $prog: "
-    killproc ${nginx} -HUP
-    RETVAL=$?
-    echo
+  echo -n $"Reloading $prog: "
+  killproc ${nginx} -HUP
+  RETVAL=$?
+  echo
 }
 
 force_reload() {
@@ -67,26 +67,26 @@ rh_status_q() {
 }
 
 case "$1" in
-start)
-rh_status_q && exit 0
-$1
-;;
-stop)
-rh_status_q || exit 0
-$1
-;;
-restart|configtest)
-$1
-;;
-reload)
-rh_status_q || exit 7
-$1
-;;
-status)
-rh_status
-;;
-*)
-echo $"Usage: $0 {start|stop|status|restart|reload|configtest}"
-exit 2
+  start)
+    rh_status_q && exit 0
+    $1
+    ;;
+  stop)
+    rh_status_q || exit 0
+    $1
+    ;;
+  restart|configtest)
+    $1
+    ;;
+  reload)
+    rh_status_q || exit 7
+    $1
+    ;;
+  status)
+    rh_status
+    ;;
+  *)
+    echo $"Usage: $0 {start|stop|status|restart|reload|configtest}"
+    exit 2
 esac
 
