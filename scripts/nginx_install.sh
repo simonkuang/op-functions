@@ -71,7 +71,7 @@ if [ ! -f "$BUILD_TEMP_DIR/pcre-8.34.tar.gz" ]; then
 fi
 if [ ! -f "$BUILD_TEMP_DIR/LuaJIT-2.0.2.tar.gz" ]; then
   wget -t 3 -O LuaJIT-2.0.2.tar.gz \
-      "http://luajit.org/download/LuaJIT-2.0.2.tar.gz"
+      "http://510112.com/software/LuaJIT-2.0.2.tar.gz"
 fi
 
 if [ ! -d "$BUILD_TEMP_DIR/nginx-1.5.11" ]; then
