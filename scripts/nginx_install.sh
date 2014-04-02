@@ -18,7 +18,7 @@ fi
 cd $BUILD_TEMP_DIR
 
 yum install -y --nogpgcheck git zlib-devel gcc gcc-c++ automake autoconf make \
-    libxml2-devel libxslt-devel patch glibc glibc-devel glibc-static imake
+    libxml2-devel libxslt-devel patch glibc glibc-devel glibc-static imake curl
 
 # try to git clone and retry 3 times
 # @param {String} git repository's url
