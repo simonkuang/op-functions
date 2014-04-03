@@ -1,3 +1,9 @@
+# starting network
+service network start
+chkconfig network on
+
+rpm -ivh "http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm"
+
 yum update -y
 yum install -y gcc gcc-c++ gcc-objc gcc-objc++ libgcc glibc.* glibc-devel.* \
   glibc-headers glibc-utils glibc-static bintuils-devel db4 db4-c++ db4-devel \
