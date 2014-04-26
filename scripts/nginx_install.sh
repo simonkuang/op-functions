@@ -66,12 +66,13 @@ if [ ! -f "$BUILD_TEMP_DIR/openssl-1.0.1g.tar.gz" ]; then
 fi
 if [ ! -f "$BUILD_TEMP_DIR/pcre-8.34.tar.gz" ]; then
   wget -t 3 -O pcre-8.34.tar.gz \
-      "http://510112.com/software/pcre-8.34.tar.gz"
-#      "ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.34.tar.gz"
+      "ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.34.tar.gz"
+#      "http://510112.com/software/pcre-8.34.tar.gz"
 fi
-if [ ! -f "$BUILD_TEMP_DIR/LuaJIT-2.0.2.tar.gz" ]; then
-  wget -t 3 -O LuaJIT-2.0.2.tar.gz \
-      "http://510112.com/software/LuaJIT-2.0.2.tar.gz"
+if [ ! -f "$BUILD_TEMP_DIR/LuaJIT-2.0.3.tar.gz" ]; then
+  wget -t 3 -O LuaJIT-2.0.3.tar.gz \
+      "http://luajit.org/download/LuaJIT-2.0.3.tar.gz"
+#      "http://510112.com/software/LuaJIT-2.0.2.tar.gz"
 fi
 
 if [ ! -d "$BUILD_TEMP_DIR/nginx-1.5.11" ]; then
@@ -83,12 +84,12 @@ fi
 if [ ! -d "$BUILD_TEMP_DIR/pcre-8.34" ]; then
   tar -C "$BUILD_TEMP_DIR/" -zxf "$BUILD_TEMP_DIR/pcre-8.34.tar.gz"
 fi
-if [ ! -d "$BUILD_TEMP_DIR/LuaJIT-2.0.2" ]; then
-  tar -C "$BUILD_TEMP_DIR/" -zxf "$BUILD_TEMP_DIR/LuaJIT-2.0.2.tar.gz"
+if [ ! -d "$BUILD_TEMP_DIR/LuaJIT-2.0.3" ]; then
+  tar -C "$BUILD_TEMP_DIR/" -zxf "$BUILD_TEMP_DIR/LuaJIT-2.0.3.tar.gz"
 fi
 
 # first, config and make and install luajit-2.0
-cd "$BUILD_TEMP_DIR/LuaJIT-2.0.2"
+cd "$BUILD_TEMP_DIR/LuaJIT-2.0.3"
 make && make install
 
 export LUAJIT_LIB="/usr/local/lib"
