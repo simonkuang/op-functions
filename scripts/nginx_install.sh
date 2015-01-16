@@ -60,9 +60,9 @@ if [ ! -f "$BUILD_TEMP_DIR/nginx-1.7.9.tar.gz" ]; then
   wget -t 3 -O nginx-1.7.9.tar.gz \
       "http://nginx.org/download/nginx-1.7.9.tar.gz"
 fi
-if [ ! -f "$BUILD_TEMP_DIR/openssl-1.0.11.tar.gz" ]; then
-  wget -t 3 -O openssl-1.0.11.tar.gz \
-      "http://www.openssl.org/source/openssl-1.0.11.tar.gz"
+if [ ! -f "$BUILD_TEMP_DIR/openssl-1.0.1l.tar.gz" ]; then
+  wget -t 3 -O openssl-1.0.1l.tar.gz \
+      "http://www.openssl.org/source/openssl-1.0.1l.tar.gz"
 fi
 if [ ! -f "$BUILD_TEMP_DIR/pcre-8.36.tar.gz" ]; then
   wget -t 3 -O pcre-8.36.tar.gz \
@@ -78,8 +78,8 @@ fi
 if [ ! -d "$BUILD_TEMP_DIR/nginx-1.7.9" ]; then
   tar -C "$BUILD_TEMP_DIR/" -zxf "$BUILD_TEMP_DIR/nginx-1.7.9.tar.gz"
 fi
-if [ ! -d "$BUILD_TEMP_DIR/openssl-1.0.11" ]; then
-  tar -C "$BUILD_TEMP_DIR/" -zxf "$BUILD_TEMP_DIR/openssl-1.0.11.tar.gz"
+if [ ! -d "$BUILD_TEMP_DIR/openssl-1.0.1l" ]; then
+  tar -C "$BUILD_TEMP_DIR/" -zxf "$BUILD_TEMP_DIR/openssl-1.0.1l.tar.gz"
 fi
 if [ ! -d "$BUILD_TEMP_DIR/pcre-8.36" ]; then
   tar -C "$BUILD_TEMP_DIR/" -zxf "$BUILD_TEMP_DIR/pcre-8.36.tar.gz"
@@ -118,7 +118,7 @@ patch -p1 < ../nginx_tcp_proxy_module/tcp.patch
   --with-mail \
   --with-mail_ssl_module \
   --with-pcre="$BUILD_TEMP_DIR/pcre-8.36" \
-  --with-openssl="$BUILD_TEMP_DIR/openssl-1.0.11" \
+  --with-openssl="$BUILD_TEMP_DIR/openssl-1.0.1l" \
   --add-module="$BUILD_TEMP_DIR/ngx_devel_kit" \
   --add-module="$BUILD_TEMP_DIR/echo-nginx-module" \
   --add-module="$BUILD_TEMP_DIR/headers-more-nginx-module" \
