@@ -56,40 +56,40 @@ get_modules \
 get_modules "https://github.com/yaoweibin/nginx_tcp_proxy_module.git" \
     "nginx_tcp_proxy_module"
 
-if [ ! -f "$BUILD_TEMP_DIR/nginx-1.7.9.tar.gz" ]; then
-  wget -t 3 -O nginx-1.7.9.tar.gz \
-      "http://nginx.org/download/nginx-1.7.9.tar.gz"
+if [ ! -f "$BUILD_TEMP_DIR/nginx-1.9.3.tar.gz" ]; then
+  wget -t 3 -O nginx-1.9.3.tar.gz \
+      "http://nginx.org/download/nginx-1.9.3.tar.gz"
 fi
-if [ ! -f "$BUILD_TEMP_DIR/openssl-1.0.1l.tar.gz" ]; then
-  wget -t 3 -O openssl-1.0.1l.tar.gz \
-      "http://www.openssl.org/source/openssl-1.0.1l.tar.gz"
+if [ ! -f "$BUILD_TEMP_DIR/openssl-1.0.2d.tar.gz" ]; then
+  wget -t 3 -O openssl-1.0.2d.tar.gz \
+      "http://www.openssl.org/source/openssl-1.0.2d.tar.gz"
 fi
-if [ ! -f "$BUILD_TEMP_DIR/pcre-8.36.tar.gz" ]; then
-  wget -t 3 -O pcre-8.36.tar.gz \
-      "ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.36.tar.gz"
-#      "http://510112.com/software/pcre-8.36.tar.gz"
+if [ ! -f "$BUILD_TEMP_DIR/pcre-8.37.tar.gz" ]; then
+  wget -t 3 -O pcre-8.37.tar.gz \
+      "http://cd82.com/software/pcre-8.37.tar.gz"
+#      "ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.37.tar.gz"
 fi
-if [ ! -f "$BUILD_TEMP_DIR/LuaJIT-2.0.3.tar.gz" ]; then
-  wget -t 3 -O LuaJIT-2.0.3.tar.gz \
-      "http://luajit.org/download/LuaJIT-2.0.3.tar.gz"
-#      "http://510112.com/software/LuaJIT-2.0.2.tar.gz"
+if [ ! -f "$BUILD_TEMP_DIR/LuaJIT-2.0.4.tar.gz" ]; then
+  wget -t 3 -O LuaJIT-2.0.4.tar.gz \
+      "http://cd82.com/software/LuaJIT-2.0.4.tar.gz"
+#      "http://luajit.org/download/LuaJIT-2.0.4.tar.gz"
 fi
 
-if [ ! -d "$BUILD_TEMP_DIR/nginx-1.7.9" ]; then
-  tar -C "$BUILD_TEMP_DIR/" -zxf "$BUILD_TEMP_DIR/nginx-1.7.9.tar.gz"
+if [ ! -d "$BUILD_TEMP_DIR/nginx-1.9.3" ]; then
+  tar -C "$BUILD_TEMP_DIR/" -zxf "$BUILD_TEMP_DIR/nginx-1.9.3.tar.gz"
 fi
-if [ ! -d "$BUILD_TEMP_DIR/openssl-1.0.1l" ]; then
-  tar -C "$BUILD_TEMP_DIR/" -zxf "$BUILD_TEMP_DIR/openssl-1.0.1l.tar.gz"
+if [ ! -d "$BUILD_TEMP_DIR/openssl-1.0.2d" ]; then
+  tar -C "$BUILD_TEMP_DIR/" -zxf "$BUILD_TEMP_DIR/openssl-1.0.2d.tar.gz"
 fi
-if [ ! -d "$BUILD_TEMP_DIR/pcre-8.36" ]; then
-  tar -C "$BUILD_TEMP_DIR/" -zxf "$BUILD_TEMP_DIR/pcre-8.36.tar.gz"
+if [ ! -d "$BUILD_TEMP_DIR/pcre-8.37" ]; then
+  tar -C "$BUILD_TEMP_DIR/" -zxf "$BUILD_TEMP_DIR/pcre-8.37.tar.gz"
 fi
-if [ ! -d "$BUILD_TEMP_DIR/LuaJIT-2.0.3" ]; then
-  tar -C "$BUILD_TEMP_DIR/" -zxf "$BUILD_TEMP_DIR/LuaJIT-2.0.3.tar.gz"
+if [ ! -d "$BUILD_TEMP_DIR/LuaJIT-2.0.4" ]; then
+  tar -C "$BUILD_TEMP_DIR/" -zxf "$BUILD_TEMP_DIR/LuaJIT-2.0.4.tar.gz"
 fi
 
 # first, config and make and install luajit-2.0
-cd "$BUILD_TEMP_DIR/LuaJIT-2.0.3"
+cd "$BUILD_TEMP_DIR/LuaJIT-2.0.4"
 make && make install
 
 export LUAJIT_LIB="/usr/local/lib"
@@ -99,12 +99,12 @@ echo '/usr/local/lib' > /etc/ld.so.conf.d/luajit.conf
 ldconfig
 
 # building nginx
-cd "$BUILD_TEMP_DIR/nginx-1.7.9"
+cd "$BUILD_TEMP_DIR/nginx-1.9.3"
 # patch for tcp proxy
 patch -p1 < ../nginx_tcp_proxy_module/tcp.patch
 # configure && make && make install
 ./configure \
-  --prefix=/usr/local/nginx-1.7.9 \
+  --prefix=/usr/local/nginx-1.9.3 \
   --user=nobody \
   --group=nobody \
   --with-http_ssl_module \
@@ -117,8 +117,8 @@ patch -p1 < ../nginx_tcp_proxy_module/tcp.patch
   --with-http_stub_status_module \
   --with-mail \
   --with-mail_ssl_module \
-  --with-pcre="$BUILD_TEMP_DIR/pcre-8.36" \
-  --with-openssl="$BUILD_TEMP_DIR/openssl-1.0.1l" \
+  --with-pcre="$BUILD_TEMP_DIR/pcre-8.37" \
+  --with-openssl="$BUILD_TEMP_DIR/openssl-1.0.2d" \
   --add-module="$BUILD_TEMP_DIR/ngx_devel_kit" \
   --add-module="$BUILD_TEMP_DIR/echo-nginx-module" \
   --add-module="$BUILD_TEMP_DIR/headers-more-nginx-module" \
