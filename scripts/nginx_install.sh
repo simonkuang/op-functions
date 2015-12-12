@@ -88,6 +88,11 @@ if [ ! -f "$BUILD_TEMP_DIR/LuaJIT-2.0.4.tar.gz" ]; then
       "http://kc32.com/software/LuaJIT-2.0.4.tar.gz"
 #      "http://luajit.org/download/LuaJIT-2.0.4.tar.gz"
 fi
+if [ ! -f "$BUILD_TEMP_DIR/drizzle7-2011.07.21.tar.gz" ]; then
+  wget -t 3 -O drizzle7-2011.07.21.tar.gz \
+      "http://kc32.com/software/drizzle7-2011.07.21.tar.gz"
+#      "http://agentzh.org/misc/nginx/drizzle7-2011.07.21.tar.gz"
+fi
 
 if [ ! -d "$BUILD_TEMP_DIR/nginx-1.9.9" ]; then
   tar -C "$BUILD_TEMP_DIR/" -zxf "$BUILD_TEMP_DIR/nginx-1.9.9.tar.gz"
@@ -101,6 +106,10 @@ fi
 if [ ! -d "$BUILD_TEMP_DIR/LuaJIT-2.0.4" ]; then
   tar -C "$BUILD_TEMP_DIR/" -zxf "$BUILD_TEMP_DIR/LuaJIT-2.0.4.tar.gz"
 fi
+if [ ! -d "$BUILD_TEMP_DIR/drizzle7-2011.07.21" ]; then
+  tar -C "$BUILD_TEMP_DIR/drizzle7-2011.07.21" -zxf \
+      "$BUILD_TEMP_DIR/drizzle7-2011.07.21.tar.gz"
+fi
 
 # first, config and make and install luajit-2.0
 cd "$BUILD_TEMP_DIR/LuaJIT-2.0.4"
@@ -111,6 +120,12 @@ export LUAJIT_INC="/usr/local/include/luajit-2.0"
 
 echo '/usr/local/lib' > /etc/ld.so.conf.d/luajit.conf
 ldconfig
+
+# second, fetch, make, instal libdrizzle for drizzle-ngx-module
+cd "$BUILD_TEMP_DIR/drizzle7-2011.07.21"
+./configure --without-server
+make libdrizzle-1.0
+make install-libdrizzle-1.0
 
 # building nginx
 cd "$BUILD_TEMP_DIR/nginx-1.9.9"
