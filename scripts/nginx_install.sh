@@ -18,7 +18,13 @@ fi
 cd $BUILD_TEMP_DIR
 
 yum install -y --nogpgcheck git zlib-devel gcc gcc-c++ automake autoconf make \
-    libxml2-devel libxslt-devel patch glibc glibc-devel glibc-static imake curl
+    libxml2-devel libxslt-devel patch glibc glibc-devel glibc-static imake curl \
+    \
+    intltool protobuf-lite-devel protobuf-lite-static protobuf-lite libuuid-devel \
+    protobuf-compiler pcre-devel readline-devel boost boost-devel boost-date-time \
+    boost-regex boost-static boost-system boost-thread boost-filesystem \
+    boost-iostreams boost-program-options libldap-devel libgearman-devel \
+    libmemcached-devel memcahced pam-devel
 
 # try to git clone and retry 3 times
 # @param {String} git repository's url
@@ -107,7 +113,7 @@ if [ ! -d "$BUILD_TEMP_DIR/LuaJIT-2.0.4" ]; then
   tar -C "$BUILD_TEMP_DIR/" -zxf "$BUILD_TEMP_DIR/LuaJIT-2.0.4.tar.gz"
 fi
 if [ ! -d "$BUILD_TEMP_DIR/drizzle7-2011.07.21" ]; then
-  tar -C "$BUILD_TEMP_DIR/drizzle7-2011.07.21" -zxf \
+  tar -C "$BUILD_TEMP_DIR/" -zxf \
       "$BUILD_TEMP_DIR/drizzle7-2011.07.21.tar.gz"
 fi
 
