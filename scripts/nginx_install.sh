@@ -133,6 +133,13 @@ cd "$BUILD_TEMP_DIR/drizzle7-2011.07.21"
 make libdrizzle-1.0
 make install-libdrizzle-1.0
 
+# temparorily fix an unused-paramater 
+# added by simonkuang on 2015-12-17
+sed -i -e "/ngx_http_auth_digest_decode_auth/,+10 s~^\([^/]*\),[[:blank:]]*\*p\([^/]*\)\(//.*\)\?$~\1\2 //\1, *p\2~I" \
+    -e "/ngx_http_auth_digest_decode_auth/,+10 s~\(//[[:blank:]]*\)\?\(p[[:blank:]]*=[[:blank:]]*ngx_sprintf(.*\)~// \2~I" \
+    -e "/ngx_http_auth_digest_decode_auth[^{]*{/,+30 s~\(//[[:blank:]]*\)\?\(p[[:blank:]]*=[[:blank:]]*ngx_cpymem(.*\)~// \2~I" \
+    $BUILD_TEMP_DIR/nginx-http-auth-digest/ngx_http_auth_digest_module.c
+
 # building nginx
 cd "$BUILD_TEMP_DIR/nginx-1.9.9"
 # patch for tcp proxy
