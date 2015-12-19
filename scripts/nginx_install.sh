@@ -23,8 +23,8 @@ yum install -y --nogpgcheck git zlib-devel gcc gcc-c++ automake autoconf make \
     intltool protobuf-lite-devel protobuf-lite-static protobuf-lite libuuid-devel \
     protobuf-compiler pcre-devel readline-devel boost boost-devel boost-date-time \
     boost-regex boost-static boost-system boost-thread boost-filesystem \
-    boost-iostreams boost-program-options libldap-devel libgearman-devel \
-    libmemcached-devel memcahced pam-devel
+    boost-iostreams boost-program-options openldap-devel libgearman-devel \
+    libmemcached-devel memcached pam-devel
 
 # try to git clone and retry 3 times
 # @param {String} git repository's url
