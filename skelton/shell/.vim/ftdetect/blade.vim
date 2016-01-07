@@ -1,0 +1,1 @@
+/usr/local/typhoon-blade/vim/ftdetect/blade.vim
