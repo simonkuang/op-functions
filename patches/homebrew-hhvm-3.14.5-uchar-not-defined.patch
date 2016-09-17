@@ -1,0 +1,13 @@
+--- hphp/runtime/base/program-functions.cpp 2016-09-17 23:43:51.000000000 +0800
++++ hphp/runtime/base/program-functions.patch.cpp 2016-09-17 23:50:43.000000000
++0800
+@@ -102,6 +102,9 @@
+ #include <boost/filesystem.hpp>
+
+ #include <libgen.h>
++#ifdef ONIG_ESCAPE_UCHAR_COLLISION
++#undef ONIG_ESCAPE_UCHAR_COLLISION
++#endif
+ #include <oniguruma.h>
+ #include <signal.h>
+ #include <libxml/parser.h>
